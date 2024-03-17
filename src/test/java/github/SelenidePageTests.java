@@ -31,17 +31,12 @@ public class SelenidePageTests {
     }
 
     @Test
-    void findCodeSnippetInWikiTest() throws InterruptedException {
+    void findCodeSnippetInWikiTest() {
         open("/selenide/selenide");
         $("#wiki-tab").click();
-        $("#wiki-body").$(byText("Soft assertions")).click();
+        $("#wiki-pages-box").$("#wiki-pages-filter").setValue("Sof");
+        $("#wiki-pages-box").$(byText("SoftAssertions")).click();
 
-        //Both ways work fine:
-
-        //Way #1: A simple check by the text preceding the JUnit5 example:
-        $("#wiki-body").shouldHave(text("Using JUnit5 extend test class"));
-
-        //Way #2: A more complicated check by the entire JUnit5 example:
         $("#wiki-body").shouldHave(text("""
                        @ExtendWith({SoftAssertsExtension.class})
                         class Tests {
@@ -55,7 +50,6 @@ public class SelenidePageTests {
                             }
                         }
                 """));
-
-        Thread.sleep(5000);
     }
+
 }
